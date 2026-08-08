@@ -46,6 +46,43 @@ def test_get_document_404():
     assert res.status_code == 404
 
 
+def test_upload_documents_and_list():
+    before_docs = client.get("/api/documents").json()
+    before_count = len(before_docs)
+    payload = (
+        "TITLE: Uploaded Nutrition Notes\n"
+        "DOCUMENT TYPE: Patient Notes\n"
+        "SECTION: Summary\n"
+        "Patient asked whether reducing sodium can lower blood pressure.\n"
+    )
+
+    res = client.post(
+        "/api/documents/upload",
+        files={"files": ("nutrition_notes.txt", payload, "text/plain")},
+    )
+    assert res.status_code == 200
+    body = res.json()
+    assert body["uploaded_count"] == 1
+    assert body["uploaded"][0]["doc_type"] == "Uploaded Document"
+
+    after_docs = client.get("/api/documents").json()
+    assert len(after_docs) == before_count + 1
+
+
+def test_upload_mixed_files_reports_skips():
+    res = client.post(
+        "/api/documents/upload",
+        files=[
+            ("files", ("notes.txt", "SECTION: A\nPatient is stable.\n", "text/plain")),
+            ("files", ("broken.pdf", b"not a real pdf", "application/pdf")),
+        ],
+    )
+    assert res.status_code == 200
+    body = res.json()
+    assert body["uploaded_count"] == 1
+    assert len(body["skipped"]) == 1
+
+
 def test_ask_returns_cited_answer():
     res = client.post(
         "/api/ask",

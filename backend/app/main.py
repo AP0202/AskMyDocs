@@ -6,6 +6,7 @@ Endpoints:
   GET  /metrics                    - Prometheus metrics (scraped by Grafana stack)
   GET  /api/documents              - list the patient's documents
   GET  /api/documents/{doc_id}     - full text of one document
+  POST /api/documents/upload       - upload one or more text documents
   POST /api/ask                    - ask a question, get a cited answer
   POST /api/feedback               - send +1 / -1 feedback on an answer
 
@@ -15,15 +16,18 @@ root.
 """
 
 import logging
+import re
 from contextlib import asynccontextmanager
+from io import BytesIO
+from pathlib import Path
 
-from fastapi import FastAPI, HTTPException, Response
+from fastapi import FastAPI, File, HTTPException, Response, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from app.config import FRONTEND_DIR
 from app import db, metrics
-from app.ingest import new_id
+from app.ingest import load_document_from_text, new_id
 from app.models import (
     AskRequest,
     AskResponse,
@@ -32,11 +36,14 @@ from app.models import (
     DocumentSummary,
     FeedbackRequest,
     FeedbackResponse,
+    UploadDocumentsResponse,
+    UploadIssue,
 )
 from app.rag import RagPipeline
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("ask_my_docs")
+SUPPORTED_UPLOAD_EXTENSIONS = {".txt", ".md", ".text", ".pdf", ".docx"}
 
 # Built once at import time; shared by every request and by eval scripts.
 pipeline = RagPipeline()
@@ -109,6 +116,116 @@ def get_document(doc_id: str):
         doc_type=doc.doc_type,
         date=doc.date,
         content=doc.content,
+    )
+
+
+def _safe_uploaded_doc_id(filename: str) -> str:
+    stem = Path(filename).stem or "uploaded_document"
+    normalized = re.sub(r"[^a-zA-Z0-9_-]+", "_", stem.strip().lower()).strip("_")
+    return f"upload_{normalized or 'document'}_{new_id()[:8]}"
+
+
+def _extract_uploaded_text(filename: str, raw: bytes) -> str:
+    ext = Path(filename).suffix.lower()
+    if ext in {".txt", ".md", ".text"}:
+        return raw.decode("utf-8")
+
+    if ext == ".pdf":
+        from pypdf import PdfReader
+
+        reader = PdfReader(BytesIO(raw))
+        pages = []
+        for page in reader.pages:
+            pages.append((page.extract_text() or "").strip())
+        return "\n\n".join(p for p in pages if p)
+
+    if ext == ".docx":
+        from docx import Document as DocxDocument
+
+        doc = DocxDocument(BytesIO(raw))
+        lines = [p.text.strip() for p in doc.paragraphs if p.text and p.text.strip()]
+        for table in doc.tables:
+            for row in table.rows:
+                cells = [c.text.strip() for c in row.cells if c.text and c.text.strip()]
+                if cells:
+                    lines.append(" | ".join(cells))
+        return "\n".join(lines)
+
+    raise ValueError("Unsupported file type")
+
+
+@app.post("/api/documents/upload", response_model=UploadDocumentsResponse)
+async def upload_documents(files: list[UploadFile] = File(...)):
+    uploaded_docs = []
+    skipped = []
+
+    for f in files:
+        name = f.filename or "uploaded_document"
+        ext = Path(name).suffix.lower()
+        if ext not in SUPPORTED_UPLOAD_EXTENSIONS:
+            skipped.append(
+                UploadIssue(
+                    filename=name,
+                    reason="Unsupported file type. Upload .txt, .md, .text, .pdf, or .docx files.",
+                )
+            )
+            continue
+
+        raw = await f.read()
+        if not raw:
+            skipped.append(UploadIssue(filename=name, reason="File is empty."))
+            continue
+
+        try:
+            text = _extract_uploaded_text(name, raw)
+        except UnicodeDecodeError:
+            skipped.append(
+                UploadIssue(
+                    filename=name,
+                    reason="Couldn't read this file as UTF-8 text.",
+                )
+            )
+            continue
+        except Exception:
+            skipped.append(
+                UploadIssue(
+                    filename=name,
+                    reason="Couldn't extract text from this file.",
+                )
+            )
+            continue
+
+        title = Path(name).stem.replace("_", " ").replace("-", " ").strip() or name
+        doc = load_document_from_text(
+            doc_id=_safe_uploaded_doc_id(name),
+            raw=text,
+            title=title,
+            doc_type="Uploaded Document",
+        )
+        if not doc.chunks:
+            skipped.append(
+                UploadIssue(
+                    filename=name,
+                    reason="No readable text content found.",
+                )
+            )
+            continue
+        uploaded_docs.append(doc)
+
+    pipeline.add_documents(uploaded_docs)
+
+    return UploadDocumentsResponse(
+        uploaded_count=len(uploaded_docs),
+        uploaded=[
+            DocumentSummary(
+                doc_id=d.doc_id,
+                title=d.title,
+                doc_type=d.doc_type,
+                date=d.date,
+            )
+            for d in uploaded_docs
+        ],
+        skipped=skipped,
     )
 
 

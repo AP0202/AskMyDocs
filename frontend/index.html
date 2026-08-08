@@ -22,6 +22,11 @@
 
     <div class="rail-section">
       <h2>Scope</h2>
+      <div class="upload-controls">
+        <button id="upload-docs-btn" class="upload-btn" type="button">Upload documents</button>
+        <input id="upload-docs-input" type="file" accept=".txt,.md,.text,.pdf,.docx" multiple hidden />
+        <p id="upload-status" class="upload-status" aria-live="polite"></p>
+      </div>
       <button class="scope-btn active" data-doc-id="">
         <span class="scope-dot all"></span>
         All documents

@@ -7,6 +7,7 @@
 const API = {
   documents: "/api/documents",
   document: (id) => `/api/documents/${encodeURIComponent(id)}`,
+  uploadDocuments: "/api/documents/upload",
   ask: "/api/ask",
   feedback: "/api/feedback",
 };
@@ -33,6 +34,9 @@ const els = {
   modalType: document.getElementById("modal-type"),
   modalContent: document.getElementById("modal-content"),
   modalClose: document.getElementById("modal-close"),
+  uploadBtn: document.getElementById("upload-docs-btn"),
+  uploadInput: document.getElementById("upload-docs-input"),
+  uploadStatus: document.getElementById("upload-status"),
 };
 
 const TAB_COLORS = {
@@ -91,6 +95,8 @@ function bindEvents() {
   els.modal.addEventListener("click", (e) => {
     if (e.target === els.modal) closeModal();
   });
+  els.uploadBtn.addEventListener("click", () => els.uploadInput.click());
+  els.uploadInput.addEventListener("change", onUploadDocuments);
 
   document.querySelectorAll(".scope-btn").forEach((btn) => {
     btn.addEventListener("click", () => setScope(""));
@@ -226,6 +232,42 @@ async function onAsk(e) {
     );
   } finally {
     setSending(false);
+  }
+}
+
+async function onUploadDocuments() {
+  const files = Array.from(els.uploadInput.files || []);
+  if (!files.length) return;
+
+  const formData = new FormData();
+  files.forEach((file) => formData.append("files", file));
+
+  els.uploadBtn.disabled = true;
+  els.uploadStatus.textContent = `Uploading ${files.length} document${files.length === 1 ? "" : "s"}...`;
+
+  try {
+    const res = await fetch(API.uploadDocuments, {
+      method: "POST",
+      body: formData,
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.detail || `Upload failed (${res.status})`);
+    }
+
+    const result = await res.json();
+    await loadDocuments();
+    setScope("");
+
+    const skippedMsg = result.skipped.length
+      ? ` Skipped ${result.skipped.length} file${result.skipped.length === 1 ? "" : "s"}.`
+      : "";
+    els.uploadStatus.textContent = `Uploaded ${result.uploaded_count} document${result.uploaded_count === 1 ? "" : "s"}.${skippedMsg}`;
+  } catch (err) {
+    els.uploadStatus.textContent = `Upload error: ${err.message}`;
+  } finally {
+    els.uploadBtn.disabled = false;
+    els.uploadInput.value = "";
   }
 }
 

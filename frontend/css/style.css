@@ -107,6 +107,31 @@ button { font-family: inherit; }
   margin: 0 0 10px;
 }
 
+.upload-controls { margin-bottom: 10px; }
+
+.upload-btn {
+  width: 100%;
+  padding: 9px 11px;
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: var(--radius-sm);
+  background: rgba(255,255,255,0.08);
+  color: #eef4f2;
+  font-size: 13px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.upload-btn:hover { background: rgba(255,255,255,0.13); }
+.upload-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.upload-status {
+  margin: 6px 2px 0;
+  font-size: 11px;
+  line-height: 1.4;
+  color: #9fc0b9;
+  min-height: 16px;
+}
+
 .scope-btn {
   width: 100%;
   display: flex;

@@ -15,6 +15,17 @@ class DocumentDetail(DocumentSummary):
     content: str
 
 
+class UploadIssue(BaseModel):
+    filename: str
+    reason: str
+
+
+class UploadDocumentsResponse(BaseModel):
+    uploaded_count: int
+    uploaded: List[DocumentSummary]
+    skipped: List[UploadIssue]
+
+
 class AskRequest(BaseModel):
     question: str = Field(..., min_length=3, max_length=1000)
     document_id: Optional[str] = Field(

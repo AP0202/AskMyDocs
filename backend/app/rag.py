@@ -11,6 +11,7 @@ ungrounded claim reach a patient.
 
 import re
 import time
+from threading import RLock
 from dataclasses import dataclass
 from typing import List, Optional
 
@@ -49,19 +50,35 @@ class RagPipeline:
     """
 
     def __init__(self):
+        self._lock = RLock()
         self.documents: List[Document] = load_all_documents()
-        self.chunks: List[Chunk] = [c for d in self.documents for c in d.chunks]
-        self.retriever = HybridRetriever(self.chunks)
+        self.chunks: List[Chunk] = []
+        self._rebuild_retriever()
         self.reranker = Reranker()
 
     def get_document(self, doc_id: str) -> Optional[Document]:
-        for d in self.documents:
-            if d.doc_id == doc_id:
-                return d
+        with self._lock:
+            for d in self.documents:
+                if d.doc_id == doc_id:
+                    return d
         return None
 
     def list_documents(self) -> List[Document]:
-        return self.documents
+        with self._lock:
+            return list(self.documents)
+
+    def add_documents(self, docs: List[Document]) -> int:
+        docs_with_chunks = [d for d in docs if d.chunks]
+        if not docs_with_chunks:
+            return 0
+        with self._lock:
+            self.documents.extend(docs_with_chunks)
+            self._rebuild_retriever()
+            return len(docs_with_chunks)
+
+    def _rebuild_retriever(self):
+        self.chunks = [c for d in self.documents for c in d.chunks]
+        self.retriever = HybridRetriever(self.chunks)
 
     def retrieve(
         self, question: str, document_id: Optional[str] = None, final_top_k: int = FINAL_TOP_K
@@ -70,10 +87,11 @@ class RagPipeline:
         if document_id:
             chunk_filter = lambda c: c.doc_id == document_id  # noqa: E731
 
-        t0 = time.perf_counter()
-        fused = self.retriever.retrieve(
-            question, top_k=FUSION_TOP_K, chunk_filter=chunk_filter
-        )
+        with self._lock:
+            t0 = time.perf_counter()
+            fused = self.retriever.retrieve(
+                question, top_k=FUSION_TOP_K, chunk_filter=chunk_filter
+            )
         metrics.record_stage("hybrid_retrieval", time.perf_counter() - t0)
 
         t1 = time.perf_counter()

@@ -79,18 +79,34 @@ def _word_chunks(text: str, max_words: int) -> List[str]:
 
 def load_document(path: Path) -> Document:
     raw = path.read_text(encoding="utf-8")
+    return load_document_from_text(doc_id=path.stem, raw=raw)
+
+
+def load_document_from_text(
+    doc_id: str,
+    raw: str,
+    *,
+    title: Optional[str] = None,
+    doc_type: Optional[str] = None,
+    date: Optional[str] = None,
+) -> Document:
     header = _parse_header(raw)
-    doc_id = path.stem
-    title = header.get("TITLE", doc_id)
-    doc_type = header.get("DOCUMENT TYPE", "Document")
-    date = (
+    resolved_title = title or header.get("TITLE", doc_id)
+    resolved_doc_type = doc_type or header.get("DOCUMENT TYPE", "Document")
+    resolved_date = date or (
         header.get("DATE COLLECTED")
         or header.get("DATE OF EXAM")
         or header.get("DATE PRESCRIBED")
         or header.get("DISCHARGE DATE")
     )
 
-    doc = Document(doc_id=doc_id, title=title, doc_type=doc_type, date=date, content=raw)
+    doc = Document(
+        doc_id=doc_id,
+        title=resolved_title,
+        doc_type=resolved_doc_type,
+        date=resolved_date,
+        content=raw,
+    )
 
     order = 0
     for section_title, body in _split_into_sections(raw):
@@ -100,9 +116,27 @@ def load_document(path: Path) -> Document:
             chunk = Chunk(
                 chunk_id=f"{doc_id}::{order}",
                 doc_id=doc_id,
-                doc_title=title,
-                doc_type=doc_type,
+                doc_title=resolved_title,
+                doc_type=resolved_doc_type,
                 section=section_title,
+                text=piece,
+                order=order,
+            )
+            doc.chunks.append(chunk)
+            order += 1
+
+    # Uploaded plain-text files may not contain SECTION markers.
+    if not doc.chunks:
+        cleaned = " ".join(raw.split())
+        for piece in _word_chunks(cleaned, CHUNK_MAX_WORDS):
+            if not piece.strip():
+                continue
+            chunk = Chunk(
+                chunk_id=f"{doc_id}::{order}",
+                doc_id=doc_id,
+                doc_title=resolved_title,
+                doc_type=resolved_doc_type,
+                section="Document Body",
                 text=piece,
                 order=order,
             )
