@@ -1,0 +1,36 @@
+TITLE: Radiology Report - Chest X-Ray
+DOCUMENT TYPE: Radiology Report
+PATIENT: Jane Sample (Demo Patient)
+DATE OF EXAM: 2026-04-10
+ORDERING PROVIDER: Dr. M. Okafor, Hospital Medicine
+EXAM: Chest X-Ray, 2 views (PA and lateral)
+
+SECTION: Clinical History
+Fever, productive cough, shortness of breath. Rule out pneumonia.
+
+SECTION: Findings
+There is a focal area of airspace opacity in the right lower lobe, consistent
+with consolidation. No pleural effusion is identified. Heart size is within
+normal limits. No pneumothorax. Visualized osseous structures are
+unremarkable.
+
+SECTION: Impression
+1. Right lower lobe airspace consolidation, consistent with pneumonia in the
+   appropriate clinical context.
+2. No pleural effusion or pneumothorax.
+
+SECTION: Plain-Language Summary
+The chest X-ray shows a cloudy area in the lower right part of the lung.
+This pattern is typically caused by a lung infection (pneumonia) rather than
+fluid around the lung or a collapsed lung, neither of which was seen on this
+image. The heart appears to be a normal size. Your care team will use this
+result along with your symptoms and other tests to guide treatment.
+
+SECTION: Next Steps
+1. This finding was used to support the diagnosis of pneumonia noted in your
+   discharge summary.
+2. Follow-up imaging may be recommended in about 6 weeks to confirm the
+   consolidation has resolved, particularly if you are a smoker or symptoms
+   persist.
+3. This report is for informational purposes and should be reviewed with
+   your ordering provider.

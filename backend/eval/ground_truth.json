@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Why is my white blood cell count flagged as high?",
+    "expected_doc_id": "lab_cbc_001",
+    "expected_keywords": ["white blood cell", "infection", "high"]
+  },
+  {
+    "question": "Is my hemoglobin level normal?",
+    "expected_doc_id": "lab_cbc_001",
+    "expected_keywords": ["hemoglobin", "normal"]
+  },
+  {
+    "question": "What does my platelet count result mean?",
+    "expected_doc_id": "lab_cbc_001",
+    "expected_keywords": ["platelet", "clot"]
+  },
+  {
+    "question": "What does my LDL cholesterol result mean?",
+    "expected_doc_id": "lab_lipid_002",
+    "expected_keywords": ["ldl", "cholesterol"]
+  },
+  {
+    "question": "Are my triglycerides high?",
+    "expected_doc_id": "lab_lipid_002",
+    "expected_keywords": ["triglycerides"]
+  },
+  {
+    "question": "Why was I admitted to the hospital?",
+    "expected_doc_id": "discharge_summary_003",
+    "expected_keywords": ["pneumonia", "admission", "admitted"]
+  },
+  {
+    "question": "What medications do I need to take after I leave the hospital?",
+    "expected_doc_id": "discharge_summary_003",
+    "expected_keywords": ["amoxicillin", "medication", "discharge"]
+  },
+  {
+    "question": "What warning signs mean I should go back to the emergency department?",
+    "expected_doc_id": "discharge_summary_003",
+    "expected_keywords": ["shortness of breath", "fever", "emergency"]
+  },
+  {
+    "question": "What did my chest X-ray show?",
+    "expected_doc_id": "radiology_report_004",
+    "expected_keywords": ["consolidation", "lung", "pneumonia"]
+  },
+  {
+    "question": "Was there fluid around my lung on the chest X-ray?",
+    "expected_doc_id": "radiology_report_004",
+    "expected_keywords": ["pleural effusion"]
+  },
+  {
+    "question": "How should I take my metformin?",
+    "expected_doc_id": "medication_sheet_005",
+    "expected_keywords": ["metformin", "twice daily", "food"]
+  },
+  {
+    "question": "What are the serious side effects of metformin I should watch for?",
+    "expected_doc_id": "medication_sheet_005",
+    "expected_keywords": ["lactic acidosis", "muscle pain", "breathing"]
+  }
+]

@@ -1,0 +1,72 @@
+TITLE: Complete Blood Count (CBC) with Differential
+DOCUMENT TYPE: Lab Report
+PATIENT: Jane Sample (Demo Patient)
+DATE COLLECTED: 2026-06-12
+ORDERING PROVIDER: Dr. A. Rivera, Internal Medicine
+
+SECTION: Test Summary
+This report contains the results of a Complete Blood Count (CBC) with differential,
+a common blood test that checks the levels of red blood cells, white blood cells,
+and platelets. It is often used as a general health screen and can help detect
+conditions such as anemia, infection, and clotting problems.
+
+SECTION: White Blood Cell (WBC) Count
+Result: 11.8 x10^3/uL
+Reference Range: 4.0 - 11.0 x10^3/uL
+Flag: HIGH
+Plain-language note: White blood cells help your body fight infection. A value
+above the normal range can happen with infections, inflammation, or stress on
+the body, but can also be a temporary finding. It is not a diagnosis by itself.
+
+SECTION: Red Blood Cell (RBC) Count
+Result: 4.6 x10^6/uL
+Reference Range: 4.2 - 5.4 x10^6/uL
+Flag: NORMAL
+
+SECTION: Hemoglobin (Hgb)
+Result: 13.9 g/dL
+Reference Range: 12.0 - 15.5 g/dL
+Flag: NORMAL
+Plain-language note: Hemoglobin carries oxygen in your blood. Low hemoglobin can
+be a sign of anemia. This result is within the expected range.
+
+SECTION: Hematocrit (Hct)
+Result: 41.2 %
+Reference Range: 36.0 - 46.0 %
+Flag: NORMAL
+
+SECTION: Platelet Count
+Result: 410 x10^3/uL
+Reference Range: 150 - 400 x10^3/uL
+Flag: HIGH
+Plain-language note: Platelets help your blood clot. A mildly elevated platelet
+count can be caused by infection, inflammation, or recent illness, and is
+commonly a temporary reactive change.
+
+SECTION: Neutrophils (%)
+Result: 74 %
+Reference Range: 40 - 70 %
+Flag: HIGH
+Plain-language note: Neutrophils are a type of white blood cell that responds
+quickly to bacterial infections. An elevated percentage often accompanies an
+elevated WBC count and can indicate the body is actively fighting an infection.
+
+SECTION: Lymphocytes (%)
+Result: 18 %
+Reference Range: 20 - 40 %
+Flag: LOW
+
+SECTION: Interpretation Notes from Lab
+The combination of an elevated WBC count with elevated neutrophils is a pattern
+sometimes seen during a bacterial infection or significant inflammation. This
+lab report does not include a diagnosis. Please discuss these results with your
+ordering provider, especially if you have symptoms such as fever, pain, or
+fatigue.
+
+SECTION: Next Steps
+1. Share these results with your care team if you have not already.
+2. Note any symptoms you are currently experiencing (fever, cough, pain, etc.).
+3. Your provider may recommend a repeat CBC in 1-2 weeks to confirm the trend,
+   or additional testing depending on your symptoms.
+4. This document is for informational purposes and is not a substitute for
+   professional medical advice.

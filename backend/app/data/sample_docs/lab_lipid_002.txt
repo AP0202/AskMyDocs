@@ -1,0 +1,54 @@
+TITLE: Lipid Panel
+DOCUMENT TYPE: Lab Report
+PATIENT: Jane Sample (Demo Patient)
+DATE COLLECTED: 2026-05-02
+ORDERING PROVIDER: Dr. A. Rivera, Internal Medicine
+
+SECTION: Test Summary
+A lipid panel measures the fats (lipids) in your blood, including cholesterol
+and triglycerides. It is commonly used to assess cardiovascular risk.
+
+SECTION: Total Cholesterol
+Result: 218 mg/dL
+Reference Range: less than 200 mg/dL
+Flag: HIGH
+Plain-language note: Total cholesterol combines several types of cholesterol.
+A result above 200 mg/dL is generally considered borderline-high to high and
+may warrant lifestyle changes or further evaluation.
+
+SECTION: LDL Cholesterol ("bad" cholesterol)
+Result: 142 mg/dL
+Reference Range: less than 100 mg/dL (optimal)
+Flag: HIGH
+Plain-language note: LDL cholesterol can build up in artery walls over time.
+Higher LDL is associated with increased cardiovascular risk. Diet, exercise,
+and sometimes medication can help lower LDL.
+
+SECTION: HDL Cholesterol ("good" cholesterol)
+Result: 52 mg/dL
+Reference Range: greater than 40 mg/dL (men), greater than 50 mg/dL (women)
+Flag: NORMAL
+Plain-language note: HDL helps remove other forms of cholesterol from the
+bloodstream. Higher HDL is generally considered protective.
+
+SECTION: Triglycerides
+Result: 168 mg/dL
+Reference Range: less than 150 mg/dL
+Flag: HIGH
+Plain-language note: Triglycerides are a type of fat used for energy. Elevated
+levels can be related to diet, weight, alcohol intake, or underlying metabolic
+conditions.
+
+SECTION: Interpretation Notes from Lab
+This panel shows elevated total cholesterol, elevated LDL, and mildly elevated
+triglycerides, with normal HDL. This pattern is often addressed with dietary
+changes, physical activity, and follow-up testing. This is not a diagnosis of
+any cardiovascular condition.
+
+SECTION: Next Steps
+1. Discuss these results with your provider to determine your overall
+   cardiovascular risk, which depends on more than this panel alone.
+2. Ask about lifestyle changes such as diet and exercise.
+3. Ask whether a follow-up lipid panel or additional testing is recommended.
+4. This document is for informational purposes and is not a substitute for
+   professional medical advice.

@@ -1,0 +1,46 @@
+name: CI - test & evaluation gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-and-evaluate:
+    runs-on: ubuntu-latest
+
+    # Force the fully-offline fallback retrieval/rerank backends in CI so
+    # the pipeline is fast and deterministic and doesn't depend on
+    # downloading model weights on every run. Swap to "sbert" /
+    # "cross_encoder" here if you want CI to test the full-quality models
+    # (slower, needs network egress to huggingface.co).
+    env:
+      EMBEDDING_BACKEND: tfidf
+      RERANK_BACKEND: lexical
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        working-directory: backend
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run unit + API tests
+        working-directory: backend
+        run: pytest -v
+
+      - name: Run retrieval evaluation (gate)
+        working-directory: backend
+        run: python eval/evaluate_retrieval.py --min-hit-rate 0.80 --min-mrr 0.55 --verbose
+
+      - name: Run end-to-end RAG evaluation (gate)
+        working-directory: backend
+        run: python eval/evaluate_rag.py --min-grounded-rate 0.70 --min-keyword-coverage 0.70 --verbose

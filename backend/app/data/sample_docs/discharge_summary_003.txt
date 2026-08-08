@@ -1,0 +1,48 @@
+TITLE: Hospital Discharge Summary
+DOCUMENT TYPE: Discharge Summary
+PATIENT: Jane Sample (Demo Patient)
+ADMISSION DATE: 2026-04-10
+DISCHARGE DATE: 2026-04-13
+ATTENDING PHYSICIAN: Dr. M. Okafor, Hospital Medicine
+
+SECTION: Reason for Admission
+Patient was admitted with fever, productive cough, and shortness of breath.
+Chest imaging and clinical exam were consistent with community-acquired
+pneumonia affecting the right lower lobe.
+
+SECTION: Hospital Course
+Patient was started on intravenous antibiotics (ceftriaxone) and supportive
+care including supplemental oxygen. Fever resolved by hospital day 2. Oxygen
+levels normalized by hospital day 3, and the patient was transitioned to an
+oral antibiotic (amoxicillin-clavulanate) prior to discharge. Patient
+tolerated the transition well with no recurrence of fever or breathing
+difficulty.
+
+SECTION: Discharge Diagnosis
+1. Community-acquired pneumonia, right lower lobe, resolving.
+2. Mild dehydration, resolved with IV fluids.
+
+SECTION: Discharge Medications
+1. Amoxicillin-clavulanate 875mg/125mg, by mouth, twice daily, for 5 more
+   days (complete the full course even if feeling better).
+2. Acetaminophen 500mg, by mouth, every 6 hours as needed for fever or pain.
+3. Continue home medications as previously prescribed (see home medication
+   list from primary care provider).
+
+SECTION: Follow-up Instructions
+1. Follow up with primary care provider within 5-7 days of discharge.
+2. Return to the emergency department if you experience worsening shortness
+   of breath, chest pain, fever above 101.5F (38.6C), confusion, or bluish
+   discoloration of lips or fingertips.
+3. Repeat chest imaging may be recommended in 6 weeks if symptoms persist,
+   to confirm the pneumonia has fully cleared.
+4. Rest and stay hydrated. Avoid strenuous activity for at least one week.
+
+SECTION: Plain-Language Summary
+You were treated in the hospital for a lung infection called pneumonia. You
+received antibiotics through an IV and then by mouth. Your fever and breathing
+improved during your stay. It's important to finish all of your antibiotic
+pills at home, even if you feel better, so the infection does not come back.
+Watch for warning signs listed above and contact your care team or go to the
+emergency department if they occur. This summary is for your reference and
+does not replace guidance from your care team.

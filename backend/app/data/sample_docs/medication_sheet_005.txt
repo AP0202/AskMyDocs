@@ -1,0 +1,43 @@
+TITLE: Patient Medication Information Sheet - Metformin
+DOCUMENT TYPE: Medication Sheet
+PATIENT: Jane Sample (Demo Patient)
+PRESCRIBED BY: Dr. A. Rivera, Internal Medicine
+DATE PRESCRIBED: 2026-05-02
+
+SECTION: What This Medication Is For
+Metformin is used to help control blood sugar levels in people with type 2
+diabetes. It works by reducing the amount of sugar released by the liver and
+helping your body respond better to insulin.
+
+SECTION: How to Take It
+Take 500mg by mouth twice daily with meals (once with breakfast, once with
+dinner) unless your provider tells you otherwise. Taking it with food reduces
+stomach upset. Do not crush or chew extended-release tablets.
+
+SECTION: Common Side Effects
+Nausea, diarrhea, stomach upset, and a metallic taste are common, especially
+in the first few weeks. These often improve over time. Taking the medication
+with food can help.
+
+SECTION: Serious Side Effects - Seek Care If You Notice
+Unusual muscle pain, difficulty breathing, unusual tiredness, stomach pain
+with nausea and vomiting, or feeling cold, especially in the arms and legs.
+These can rarely be signs of a serious condition called lactic acidosis and
+require prompt medical attention.
+
+SECTION: Monitoring
+Your provider will periodically check your kidney function and blood sugar
+control (A1C) while you are on this medication, typically every 3-6 months.
+
+SECTION: Interactions and Precautions
+Tell your provider about all medications and supplements you take. Let your
+provider know before any procedure involving contrast dye (used in some
+imaging studies), as metformin may need to be paused around that time.
+Limit alcohol intake, as it can increase the risk of side effects.
+
+SECTION: Plain-Language Summary
+Metformin helps manage type 2 diabetes by lowering blood sugar. Take it with
+food to reduce stomach side effects, which are common but usually improve.
+Watch for the rare but serious warning signs listed above. Keep up with
+regular lab monitoring as recommended by your provider. This sheet is for
+general information and does not replace instructions from your prescriber.

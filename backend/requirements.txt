@@ -1,0 +1,23 @@
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+pydantic==2.9.2
+python-dotenv==1.0.1
+
+# retrieval
+rank-bm25==0.2.2
+scikit-learn==1.5.2
+numpy==1.26.4
+
+# monitoring
+prometheus-client==0.21.0
+
+# optional but recommended: real embeddings + cross-encoder reranking
+# (the app runs without these too -- see app/retrieval/*.py fallbacks)
+sentence-transformers==3.1.1
+
+# LLM generation (optional; app falls back to extractive answers without a key)
+openai==1.51.0
+
+# testing / eval
+pytest==8.3.3
+httpx==0.27.2
