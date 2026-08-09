@@ -364,5 +364,3 @@ compliant clinical product. To productionize it you'd additionally need:
   in-memory index, for scale and persistence.
 - **Clinical review** of prompts and disclaimers, and a human-in-the-loop
   escalation path for anything the system is unsure about.
-- **LLM-as-judge evaluation** at scale (this repo's keyword-coverage check
-  is a lightweight, API-key-free stand-in for that).
